@@ -23,9 +23,7 @@
 hs_err_pid*
 replay_pid*
 
-# IntelliJ
 .idea/
-
-# 教材
-src/answer/
-src/exercises/
+out/
+*.iml
+src/
