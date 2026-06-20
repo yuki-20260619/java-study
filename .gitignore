@@ -26,6 +26,9 @@ replay_pid*
 # IntelliJ
 .idea/
 
+# コンパイル結果
+out/
+
 # 教材
 src/answer/
 src/exercises/
