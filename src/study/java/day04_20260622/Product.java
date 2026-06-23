@@ -1,4 +1,4 @@
-package study.day04_20260622;
+package study.java.day04_20260622;
 
 public class Product {
     // フィールド（データ）

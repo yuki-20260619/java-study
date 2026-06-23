@@ -1,4 +1,4 @@
-package study.day02_20260620;
+package study.java.day03_20260621;
 
 public class Employee {
     // フィールド（データ）
@@ -7,7 +7,7 @@ public class Employee {
     private int salary;
 
     // コンストラクタ
-    public Employee(String name,String department, int salary){
+    public Employee(String name, String department, int salary){
         this.name = name;
         this.department = department;
         this.salary = salary;
@@ -21,7 +21,8 @@ public class Employee {
         System.out.println("給与：" + salary + "円");
     }
 
-    // getter：課題１
+    // day02復習
+    // getter
     public String getName() {
         return name;
     }
@@ -32,7 +33,7 @@ public class Employee {
         return salary;
     }
 
-    // setter：課題２
+    // setter
     public void setName(String name){
         this.name = name;
     }

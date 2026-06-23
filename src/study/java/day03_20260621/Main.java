@@ -1,4 +1,4 @@
-package study.day03_20260621;
+package study.java.day03_20260621;
 
 public class Main {
     public static void main(String[] args) {

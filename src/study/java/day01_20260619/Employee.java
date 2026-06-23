@@ -1,4 +1,4 @@
-package study.day01_20260619;
+package study.java.day01_20260619;
 
 public class Employee {
     // フィールド（データ）

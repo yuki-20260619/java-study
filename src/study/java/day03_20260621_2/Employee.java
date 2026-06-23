@@ -1,5 +1,5 @@
-package study.day03_20260621;
-
+package study.java.day03_20260621_2;
+// day03からコピー
 public class Employee {
     // フィールド（データ）
     private String name;

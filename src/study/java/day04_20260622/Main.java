@@ -1,4 +1,4 @@
-package study.day04_20260622;
+package study.java.day04_20260622;
 import java.util.ArrayList;
 
 public class Main {
