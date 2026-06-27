@@ -48,7 +48,7 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         /* StringBuilder.append()はオーバーロード（メソッドの多重定義）されている。
-           そのため、文字列だけでなく数値や審議地などもそのまま追加できる。
+           そのため、文字列だけでなく数値や真偽値などもそのまま追加できる。
 
            ・ append(String)
            ・ append(int)
