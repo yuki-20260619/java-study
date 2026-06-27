@@ -271,9 +271,49 @@ src/study/java/day07_20260626
 
 ---
 
+### Day08（2026/06/27）
+標準ライブラリ
+
+#### 学習内容
+
+* import
+* LocalDate
+* LocalDateTime
+* DateTimeFormatter
+* Math
+* Random
+* StringBuilder
+* append()のオーバーロード
+
+#### 実装した機能
+
+* 現在日付の取得
+* 現在日時の取得
+* 日付・時刻のフォーマット
+* Mathクラスによる数値計算
+* Randomクラスによる乱数生成
+* StringBuilderによる文字列連結
+
+#### 学んだこと
+
+#### 学んだこと
+
+Javaには標準ライブラリとして便利なクラスが多数用意されており、それらをimportすることで利用できることを学んだ。
+
+LocalDateやLocalDateTimeによる日付・時刻の取得、Mathクラスによる数値計算、Randomクラスによる乱数生成など、実務でも利用頻度の高い標準ライブラリの基本的な使い方を理解した。
+
+また、StringBuilderを使うことで文字列を効率よく連結できることや、append()はオーバーロードされているため、Stringだけでなくintやdoubleなども追加できることを理解した。
+
+#### フォルダ
+
+```text
+src/study/java/day08_20260627
+```
+
+---
+
 ## 今後学習予定
 
-- Day08：標準ライブラリ
 - Day09：ファイル操作
 - Day10：簡単なアプリ作成
 
