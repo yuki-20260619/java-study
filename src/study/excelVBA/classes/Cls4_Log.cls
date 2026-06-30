@@ -8,10 +8,11 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
-Public conductDate As String
+Public runDateTime As String
 Public userName As String
 Public folderPath As String
 Public fileName As String
+Public errorCord As String
 Public totalRecord As Long
 Public readRecord As Long
 Public errorRecord As Long
