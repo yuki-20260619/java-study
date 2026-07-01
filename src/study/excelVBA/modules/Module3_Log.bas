@@ -47,7 +47,7 @@ Public Sub WriteProcessLog(ByRef processLog() As Variant, ByRef cls4 As Cls4_Log
     '￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
     With cls4
         If Not .conductdata = 0 Then
-            processLog(colProcessLog.実行日時, writeRow) = .conductDate
+            processLog(colProcessLog.実行日時, writeRow) = .runDateTime
         End If
         If Not .userName = "" Then
             processLog(colProcessLog.実行者, writeRow) = .userName
@@ -67,10 +67,10 @@ Public Sub WriteProcessLog(ByRef processLog() As Variant, ByRef cls4 As Cls4_Log
         If Not .errorRecord = 0 Then
             processLog(colProcessLog.エラーレコード数, writeRow) = .errorRecord
         End If
-        If Not .errorRecord = "" Then
+        If Not .processStatus = "" Then
             processLog(colProcessLog.処理ステータス, writeRow) = .processStatus
         End If
-        If Not .errorRecord = 0 Then
+        If Not .timeSpent = 0 Then
             processLog(colProcessLog.処理時間, writeRow) = .timeSpent
         End If
         
@@ -86,6 +86,7 @@ Public Sub CreateErrorCol(ByRef errorLog() As Variant)
     errorLog(colErrorLog.実行者, 0) = "実行者"
     errorLog(colErrorLog.フォルダパス, 0) = "フォルダパス"
     errorLog(colErrorLog.ファイル名, 0) = "ファイル名"
+    errorLog(colErrorLog.エラーコード, 0) = "エラーコード"
     errorLog(colErrorLog.エラー行番号, 0) = "エラー行番号"
     errorLog(colErrorLog.該当データ, 0) = "該当データ"
     errorLog(colErrorLog.エラー理由, 0) = "エラー理由"
@@ -98,8 +99,8 @@ Public Sub WriteErrorLog(ByRef errorLog() As Variant, ByRef cls4 As Cls4_Log)
     '// ログを記録する
     '￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
     With cls4
-        If Not .conductdata = 0 Then
-            errorLog(colErrorLog.実行日時, writeRow) = .conductDate
+        If Not .runDateTime = 0 Then
+            errorLog(colErrorLog.実行日時, writeRow) = .runDateTime
         End If
         If Not .userName = "" Then
             errorLog(colErrorLog.実行者, writeRow) = .userName
@@ -110,20 +111,23 @@ Public Sub WriteErrorLog(ByRef errorLog() As Variant, ByRef cls4 As Cls4_Log)
         If Not .fileName = "" Then
             errorLog(colErrorLog.ファイル名, writeRow) = .fileName
         End If
-        If Not .totalRecord = 0 Then
+        If Not .errorCord = "" Then
+            errorLog(colErrorLog.エラーコード, writeRow) = .errorCord
+        End If
+        If Not .errorRow = 0 Then
             errorLog(colErrorLog.エラー行番号, writeRow) = .errorRow
         End If
-        If Not .totalRecord = "" Then
-            errorLog(colErrorLog.該当データ, writeRow) = .relevantData
+        If Not .errorReason = "" Then
+            errorLog(colErrorLog.該当データ, writeRow) = .errorReason
         End If
-        If Not .readRecord = 0 Then
-            errorLog(colErrorLog.エラー理由, writeRow) = .errorReason
+        If Not .relevantData = "" Then
+            errorLog(colErrorLog.エラー理由, writeRow) = .relevantData
         End If
     End With
 End Sub
 Public Sub ClearLog(ByRef cls04 As Cls4_Log)
     With cls04
-        '.conductDate = 0
+        '.runDateTime = 0
         '.userName = ""
         '.folderPath = ""
         .fileName = ""
@@ -138,15 +142,15 @@ End Sub
 Public Sub getCommonLog(ByRef cls04 As Cls4_Log, ByVal openFolderPath As String)
     '// 共通ログを取得
     '￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣
-    Call WriteConductDate(cls04)                          '// 実行日時
+    Call WriteRunDateTime(cls04)                          '// 実行日時
     Call WriteUserName(cls04)                             '// 実行者
     Call WriteFolderPath(cls04, openFolderPath)     '// フォルダパス
 End Sub
 Public Sub getErrorF001()
 
 End Sub
-Public Sub WriteConductDate(ByRef cls04 As Cls4_Log)
-    cls04.conductDate = Format(Now, "yyyy/mm/dd/ hh:mm:ss")
+Public Sub WriteRunDateTime(ByRef cls04 As Cls4_Log)
+    cls04.runDateTime = Format(Now, "yyyy/mm/dd/ hh:mm:ss")
 End Sub
 Public Sub WriteUserName(ByRef cls04 As Cls4_Log)
     cls04.userName = Environ("USERNAME")
