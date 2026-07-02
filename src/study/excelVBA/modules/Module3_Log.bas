@@ -25,6 +25,9 @@ Private Enum colErrorLog
     ƒGƒ‰[——R
     endCol = ƒGƒ‰[——R
 End Enum
+'// -------------------------------------------------------
+'  ˆ—ƒƒO
+'// -------------------------------------------------------
 Public Sub CreateProcessCol(ByRef processLog() As Variant)
     ReDim processLog(colProcessLog.endCol, 0)
     
@@ -38,15 +41,15 @@ Public Sub CreateProcessCol(ByRef processLog() As Variant)
     processLog(colProcessLog.ˆ—ƒXƒe[ƒ^ƒX, 0) = "ˆ—ƒXƒe[ƒ^ƒX"
     processLog(colProcessLog.ˆ—ŠÔ, 0) = "ˆ—ŠÔ"
 End Sub
-Public Sub WriteProcessLog(ByRef processLog() As Variant, ByRef cls4 As Cls4_Log)
+Public Sub WriteProcessLog(ByRef processLog As Variant, ByRef cls04 As Cls4_Log)
     Dim writeRow As Long
     writeRow = UBound(processLog, 1) + 1
     ReDim Preserve processLog(colProcessLog.endCol, writeRow)
     
     '// ƒƒO‚ğ‹L˜^‚·‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    With cls4
-        If Not .conductdata = 0 Then
+    With cls04
+        If Not .runDateTime = "" Then
             processLog(colProcessLog.Às“ú, writeRow) = .runDateTime
         End If
         If Not .userName = "" Then
@@ -76,7 +79,7 @@ Public Sub WriteProcessLog(ByRef processLog() As Variant, ByRef cls4 As Cls4_Log
         
         '// ƒƒO‚ğÁ‹
         'PPPPPPPPPPPPPPPPPPPPPPPPP
-        Call ClearLog(cls4)
+        Call ClearLog(cls04)
     End With
 End Sub
 Public Sub CreateErrorCol(ByRef errorLog() As Variant)
@@ -91,14 +94,14 @@ Public Sub CreateErrorCol(ByRef errorLog() As Variant)
     errorLog(colErrorLog.ŠY“–ƒf[ƒ^, 0) = "ŠY“–ƒf[ƒ^"
     errorLog(colErrorLog.ƒGƒ‰[——R, 0) = "ƒGƒ‰[——R"
 End Sub
-Public Sub WriteErrorLog(ByRef errorLog() As Variant, ByRef cls4 As Cls4_Log)
+Public Sub WriteErrorLog(ByRef errorLog As Variant, ByRef cls04 As Cls4_Log)
     Dim writeRow As Long
     writeRow = UBound(errorLog, 1) + 1
     ReDim Preserve errorLog(colErrorLog.endCol, writeRow)
     
     '// ƒƒO‚ğ‹L˜^‚·‚é
     'PPPPPPPPPPPPPPPPPPPPPPPPP
-    With cls4
+    With cls04
         If Not .runDateTime = 0 Then
             errorLog(colErrorLog.Às“ú, writeRow) = .runDateTime
         End If
@@ -111,43 +114,119 @@ Public Sub WriteErrorLog(ByRef errorLog() As Variant, ByRef cls4 As Cls4_Log)
         If Not .fileName = "" Then
             errorLog(colErrorLog.ƒtƒ@ƒCƒ‹–¼, writeRow) = .fileName
         End If
-        If Not .errorCord = "" Then
-            errorLog(colErrorLog.ƒGƒ‰[ƒR[ƒh, writeRow) = .errorCord
+        If Not .errorCode = "" Then
+            errorLog(colErrorLog.ƒGƒ‰[ƒR[ƒh, writeRow) = .errorCode
         End If
         If Not .errorRow = 0 Then
             errorLog(colErrorLog.ƒGƒ‰[s”Ô†, writeRow) = .errorRow
         End If
-        If Not .errorReason = "" Then
-            errorLog(colErrorLog.ŠY“–ƒf[ƒ^, writeRow) = .errorReason
-        End If
         If Not .relevantData = "" Then
-            errorLog(colErrorLog.ƒGƒ‰[——R, writeRow) = .relevantData
+            errorLog(colErrorLog.ŠY“–ƒf[ƒ^, writeRow) = .relevantData
+        End If
+        If Not .errorReason = "" Then
+            errorLog(colErrorLog.ƒGƒ‰[——R, writeRow) = .errorReason
         End If
     End With
 End Sub
 Public Sub ClearLog(ByRef cls04 As Cls4_Log)
     With cls04
-        '.runDateTime = 0
-        '.userName = ""
-        '.folderPath = ""
+        .runDateTime = 0
+        .userName = ""
+        .folderPath = ""
         .fileName = ""
         .totalRecord = 0
         .readRecord = 0
         .processStatus = ""
         .timeSpent = 0
         .errorRecord = 0
+        .errorCode = ""
         .relevantData = ""
+        .errorReason = ""
     End With
 End Sub
+'// -------------------------------------------------------
+'  ƒƒOæ“¾
+'// -------------------------------------------------------
 Public Sub getCommonLog(ByRef cls04 As Cls4_Log, ByVal openFolderPath As String)
     '// ‹¤’ÊƒƒO‚ğæ“¾
     'PPPPPPPPPPPPPPPPPPPPPPPPP
     Call WriteRunDateTime(cls04)                          '// Às“ú
-    Call WriteUserName(cls04)                             '// ÀsÒ
-    Call WriteFolderPath(cls04, openFolderPath)     '// ƒtƒHƒ‹ƒ_ƒpƒX
+    Call WriteUserName(cls04)                              '// ÀsÒ
+    Call WriteFolderPath(cls04, openFolderPath)      '// ƒtƒHƒ‹ƒ_ƒpƒX
 End Sub
-Public Sub getErrorF001()
-
+Public Sub getCommonLogToFile(ByRef cls04 As Cls4_Log, ByVal openFolderPath As String, ByVal fileName As String)
+    '// ‹¤’ÊƒƒO‚ğæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Call WriteRunDateTime(cls04)                          '// Às“ú
+    Call WriteUserName(cls04)                              '// ÀsÒ
+    Call WriteFolderPath(cls04, openFolderPath)      '// ƒtƒHƒ‹ƒ_ƒpƒX
+    Call WriteFileName(cls04, fileName)                 '// ƒtƒ@ƒCƒ‹–¼
+End Sub
+Public Sub getErrorF001(ByRef cls04 As Cls4_Log, ByVal startTime As Double)
+    '// F001ƒƒO‚ğæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim endTime As Double: endTime = Timer
+    
+    ' // ƒGƒ‰[ƒƒO
+    Call WriteerrorCode(cls04, "F001")                                              '// ƒGƒ‰[ƒR[ƒh
+    Call WriteErrorReason(cls04, "w’èƒtƒHƒ‹ƒ_‚ª‘¶İ‚µ‚Ü‚¹‚ñB")         '// ƒGƒ‰[——R
+    
+    '// ˆ—ƒƒO
+    Call WriteProcessStatus(cls04, "¸”s")                                         '// ˆ—ƒXƒe[ƒ^ƒX
+    Call WriteTimeSpent(cls04, startTime, endTime)                          '// ˆ—ŠÔ
+End Sub
+Public Sub getErrorF002(ByRef cls04 As Cls4_Log, ByVal startTime As Double)
+    '// F002ƒƒO‚ğæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim endTime As Double: endTime = Timer
+    
+    ' // ƒGƒ‰[ƒƒO
+    Call WriteerrorCode(cls04, "F002")                                                  '// ƒGƒ‰[ƒR[ƒh
+    Call WriteErrorReason(cls04, "ƒtƒ@ƒCƒ‹‚ª‘I‘ğ‚³‚ê‚Ü‚¹‚ñ‚Å‚µ‚½B")        '// ƒGƒ‰[——R
+    
+    '// ˆ—ƒƒO
+    Call WriteProcessStatus(cls04, "¸”s")                                              '// ˆ—ƒXƒe[ƒ^ƒX
+    Call WriteTimeSpent(cls04, startTime, endTime)                               '// ˆ—ŠÔ
+End Sub
+Public Sub getErrorE001(ByRef cls04 As Cls4_Log, ByVal startTime As Double, ByVal charCode As String)
+    '// E001ƒƒO‚ğæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim endTime As Double: endTime = Timer
+    
+    ' // ƒGƒ‰[ƒƒO
+    Call WriteerrorCode(cls04, "E001")                                                                    '// ƒGƒ‰[ƒR[ƒh
+    Call WriteErrorReason(cls04, "•¶šƒR[ƒh‚ª" & charCode & "‚Å‚Í‚ ‚è‚Ü‚¹‚ñB")        '// ƒGƒ‰[——R
+    
+    '// ˆ—ƒƒO
+    Call WriteProcessStatus(cls04, "¸”s")                                                                '// ˆ—ƒXƒe[ƒ^ƒX
+    Call WriteTimeSpent(cls04, startTime, endTime)                                                 '// ˆ—ŠÔ
+End Sub
+Public Sub getErrorE002(ByRef cls04 As Cls4_Log, ByVal startTime As Double, ByVal targetContent As String)
+    '// E002ƒƒO‚ğæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim endTime As Double: endTime = Timer
+    
+    ' // ƒGƒ‰[ƒƒO
+    Call WriteerrorCode(cls04, "E002")                                       '// ƒGƒ‰[ƒR[ƒh
+    Call WriteErrorReason(cls04, "ƒJƒ‰ƒ€–¼‚ªˆê’v‚µ‚Ü‚¹‚ñB")        '// ƒGƒ‰[——R
+    Call WriteRelevantData(cls04, targetContent)                        '// ŠY“–ƒf[ƒ^
+    
+    '// ˆ—ƒƒO
+    Call WriteProcessStatus(cls04, "¸”s")                                  '// ˆ—ƒXƒe[ƒ^ƒX
+    Call WriteTimeSpent(cls04, startTime, endTime)                   '// ˆ—ŠÔ
+End Sub
+Public Sub getErrorE003(ByRef cls04 As Cls4_Log, ByVal startTime As Double)
+    '// E001ƒƒO‚ğæ“¾
+    'PPPPPPPPPPPPPPPPPPPPPPPPP
+    Dim endTime As Double: endTime = Timer
+    
+    ' // ƒGƒ‰[ƒƒO
+    Call WriteerrorCode(cls04, "E003")                                          '// ƒGƒ‰[ƒR[ƒh
+    Call WriteErrorReason(cls04, "æˆøƒf[ƒ^‚ª‘¶İ‚µ‚Ü‚¹‚ñB")        '// ƒGƒ‰[——R
+    
+    '// ˆ—ƒƒO
+    Call WriteProcessStatus(cls04, "¸”s")                                      '// ˆ—ƒXƒe[ƒ^ƒX
+    Call WriteTimeSpent(cls04, startTime, endTime)                       '// ˆ—ŠÔ
 End Sub
 Public Sub WriteRunDateTime(ByRef cls04 As Cls4_Log)
     cls04.runDateTime = Format(Now, "yyyy/mm/dd/ hh:mm:ss")
@@ -160,6 +239,9 @@ Public Sub WriteFolderPath(ByRef cls04 As Cls4_Log, ByVal folderPath As String)
 End Sub
 Public Sub WriteFileName(ByRef cls04 As Cls4_Log, ByVal fileName As String)
     cls04.fileName = fileName
+End Sub
+Public Sub WriteerrorCode(ByRef cls04 As Cls4_Log, ByVal errorCode As String)
+    cls04.errorCode = errorCode
 End Sub
 Public Sub WriteTotalRecord(ByRef cls04 As Cls4_Log, ByVal maxRecord As Long)
     cls04.totalRecord = maxRecord
@@ -179,9 +261,9 @@ End Sub
 Public Sub WriteErrorRow(ByRef cls04 As Cls4_Log, ByVal errorRowNumber As Long)
     cls04.errorRow = errorRowNumber
 End Sub
-Public Sub WriteErrorReason(ByRef cls04 As Cls4_Log, ByVal targetContent As String)
-    cls04.errorReason = targetContent
+Public Sub WriteErrorReason(ByRef cls04 As Cls4_Log, ByVal errorContent As String)
+    cls04.errorReason = errorContent
 End Sub
-Public Sub WriteRelevantData(ByRef cls04 As Cls4_Log, ByVal errorContent As String)
-    cls04.relevantData = errorContent
+Public Sub WriteRelevantData(ByRef cls04 As Cls4_Log, ByVal targetContent As String)
+    cls04.relevantData = targetContent
 End Sub
